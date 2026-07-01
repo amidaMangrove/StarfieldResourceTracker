@@ -1,0 +1,40 @@
+{
+  "name": "starfield-resource-tracker",
+  "version": "1.0.0",
+  "description": "Starfield のクラフト資源を追跡する常時最前面オーバーレイ",
+  "main": "src/main.js",
+  "author": "sawaguchi",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.0"
+  },
+  "build": {
+    "appId": "com.sawaguchi.starfieldresourcetracker",
+    "productName": "StarfieldResourceTracker",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "build/tray.png",
+      "build/icon.ico"
+    ],
+    "win": {
+      "target": [
+        "portable",
+        "nsis"
+      ],
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true
+    }
+  }
+}

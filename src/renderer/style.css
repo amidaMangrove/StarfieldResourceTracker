@@ -1,0 +1,449 @@
+/* ===== Starfield Constellation パレット ===== */
+:root {
+  --c-white: #f4f5f6;
+  --c-red: #c92338;
+  --c-orange: #e76835;
+  --c-gold: #d6a84e;
+  --c-blue: #2f5286;
+
+  /* オーバーレイ用（ゲーム上で視認しやすい半透明ダークネイビー） */
+  --bg: rgba(16, 24, 42, 0.86);
+  --panel: rgba(47, 82, 134, 0.92); /* Constellation blue */
+  --panel-line: rgba(214, 168, 78, 0.45); /* gold の枠線 */
+  --text: var(--c-white);
+  --text-dim: #aab4c6;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  font-family: "Segoe UI", "Yu Gothic UI", sans-serif;
+  font-size: 13px;
+  color: var(--text);
+  user-select: none;
+  background: transparent;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--bg);
+  border: 1px solid var(--panel-line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* ---------- タイトルバー ---------- */
+#titlebar {
+  -webkit-app-region: drag;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 8px;
+  background: var(--panel);
+  border-bottom: 2px solid var(--c-gold);
+  cursor: move;
+}
+
+#titlebar .title {
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--c-gold);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.5px;
+}
+
+.win-buttons {
+  -webkit-app-region: no-drag;
+  display: flex;
+  gap: 4px;
+}
+
+.win-buttons button {
+  -webkit-app-region: no-drag;
+  width: 22px;
+  height: 22px;
+  border: none;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--c-white);
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.win-buttons button:hover {
+  background: var(--c-gold);
+  color: #1a2236;
+}
+
+.win-buttons button.active {
+  background: var(--c-orange);
+  color: #fff;
+}
+
+#btn-quit:hover {
+  background: var(--c-red);
+  color: #fff;
+}
+
+/* ---------- 追加フォーム ---------- */
+#add-form {
+  display: flex;
+  gap: 4px;
+  padding: 6px 8px;
+}
+
+/* ---------- 自前ドロップダウン ---------- */
+#combo {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+}
+
+#name-input {
+  flex: 1;
+  min-width: 0;
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+#combo-toggle {
+  flex: none;
+  width: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-left: none;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--c-gold);
+  cursor: pointer;
+  font-size: 10px;
+}
+
+#combo-toggle:hover {
+  background: var(--c-gold);
+  color: #1a2236;
+}
+
+#combo-list {
+  display: none;
+  position: absolute;
+  top: calc(100% + 3px);
+  left: 0;
+  right: 0;
+  max-height: 240px;
+  overflow-y: auto;
+  list-style: none;
+  margin: 0;
+  padding: 3px;
+  background: rgba(16, 24, 42, 0.98);
+  border: 1px solid var(--panel-line);
+  border-radius: 6px;
+  z-index: 100;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+#combo.open #combo-list {
+  display: block;
+}
+
+#combo-list .combo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 5px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text);
+}
+
+#combo-list .combo-item:hover,
+#combo-list .combo-item.active {
+  background: var(--c-blue);
+}
+
+#combo-list .combo-craft {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  background: var(--c-orange);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+#combo-list .combo-empty {
+  padding: 6px 8px;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+#combo-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+#combo-list::-webkit-scrollbar-thumb {
+  background: var(--c-blue);
+  border-radius: 4px;
+}
+
+#combo-list::-webkit-scrollbar-thumb:hover {
+  background: var(--c-gold);
+}
+
+#add-form input {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 4px;
+  color: var(--text);
+  padding: 5px 6px;
+  font-size: 13px;
+}
+
+#add-form input:focus {
+  outline: none;
+  border-color: var(--c-gold);
+}
+
+#btn-add {
+  width: 30px;
+  border: none;
+  border-radius: 4px;
+  background: var(--c-orange);
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#btn-add:hover {
+  background: #f47a48;
+}
+
+/* ---------- 一覧 ---------- */
+#list {
+  flex: 1;
+  list-style: none;
+  overflow-y: auto;
+  padding: 2px 6px;
+}
+
+#list li {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 6px;
+  margin-bottom: 3px;
+  background: rgba(255, 255, 255, 0.05);
+  border-left: 3px solid var(--c-blue);
+  border-radius: 4px;
+}
+
+#list li.craftable {
+  border-left-color: var(--c-orange);
+}
+
+#list li.collected {
+  border-left-color: var(--c-gold);
+}
+
+#list li .row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#list li.collected .name {
+  text-decoration: line-through;
+  opacity: 0.45;
+}
+
+#list li .check {
+  cursor: pointer;
+  font-size: 14px;
+  width: 18px;
+  text-align: center;
+  color: var(--c-gold);
+}
+
+#list li .name {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+/* 工業作業台バッジ */
+#list li .craft-badge {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: var(--c-orange);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+}
+
+#list li .craft-badge:hover {
+  background: var(--c-gold);
+  color: #1a2236;
+}
+
+#list li.open .craft-badge {
+  background: var(--c-gold);
+  color: #1a2236;
+}
+
+/* レシピパネル（展開時のみ） */
+#list li .recipe {
+  display: none;
+  flex-direction: column;
+  gap: 3px;
+  margin: 5px 0 2px 24px;
+  padding: 5px 7px;
+  background: rgba(0, 0, 0, 0.28);
+  border-left: 2px solid var(--c-orange);
+  border-radius: 4px;
+}
+
+#list li.open .recipe {
+  display: flex;
+}
+
+#list li .recipe-tier {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--c-orange);
+  letter-spacing: 0.3px;
+}
+
+#list li .recipe-mats {
+  font-size: 12px;
+  color: var(--c-white);
+  line-height: 1.4;
+}
+
+#list li .recipe-add {
+  align-self: flex-start;
+  margin-top: 2px;
+  padding: 3px 8px;
+  border: 1px solid var(--c-gold);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--c-gold);
+  font-size: 11px;
+  cursor: pointer;
+}
+
+#list li .recipe-add:hover {
+  background: var(--c-gold);
+  color: #1a2236;
+}
+
+#list li .del {
+  border: none;
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 13px;
+}
+
+#list li .del:hover {
+  color: var(--c-red);
+}
+
+#list:empty::after {
+  content: "資源を追加してください";
+  display: block;
+  text-align: center;
+  color: var(--text-dim);
+  padding: 20px 0;
+  font-size: 12px;
+}
+
+/* ---------- フッター ---------- */
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 8px;
+  background: var(--panel);
+  border-top: 2px solid var(--c-gold);
+  font-size: 11px;
+  color: var(--c-white);
+}
+
+.footer-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.opacity-ctl {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+#opacity {
+  width: 70px;
+  accent-color: var(--c-gold);
+}
+
+#btn-clear {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+#btn-clear:hover {
+  filter: brightness(1.4);
+}
+
+/* ---------- コンパクト表示 ---------- */
+body.compact #add-form,
+body.compact footer {
+  display: none;
+}
+
+body.compact #list li {
+  padding: 3px 6px;
+}
+
+/* スクロールバー */
+#list::-webkit-scrollbar {
+  width: 6px;
+}
+
+#list::-webkit-scrollbar-thumb {
+  background: var(--c-blue);
+  border-radius: 3px;
+}
+
+#list::-webkit-scrollbar-thumb:hover {
+  background: var(--c-gold);
+}
